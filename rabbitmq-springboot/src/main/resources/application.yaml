@@ -1,0 +1,20 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+
+    #开启交换机发布确认模式
+    publisher-confirm-type: correlated
+    #消息没有被接受会自动回退，但是需要实现returnCallBack回调接口
+#    publisher-returns: true
+    listener:
+      #prefech: 实现优先级队列需要限制一次只拿一个消息，不然一发消息不管是否sleep，都会全部拿到，无法通过优先级排序
+      #acknowledge-mode: 开启手动ack，需要在consumer中使用channel.basicAck方法手动确认
+      direct:
+        prefetch: 1
+#        acknowledge-mode: manual
+      simple:
+        prefetch: 1
+  #        acknowledge-mode: manual
